@@ -17,8 +17,11 @@ public class GameMain {
         mochila.adicionaItem(pocao1);mochila.adicionaItem(pocao1);
         mochila.adicionaItem(pocao2);mochila.adicionaItem(pocao2);
         
-        //carrega os personagens do arquivo
-        PersonagensArquivo.carregaPersonagens(personagens);
+        Guerreiro p1=new Guerreiro("GUERREIRO");personagens.add(p1);
+        BlackMage p2=new BlackMage("MAGO");personagens.add(p2);
+        WhiteMage p3=new WhiteMage("CLERIGO");personagens.add(p3);
+        Rogue p4=new Rogue("ROGUE");personagens.add(p4);       
+        PersonagensArquivo.salvaTodos(personagens);
         
         Scanner teclado = new Scanner(System.in);
         int escolha;
@@ -39,7 +42,7 @@ public class GameMain {
             }
             if(escolha==4) {
                 teclado.close();
-                PersonagensArquivo.salvaTodos(personagens);//salva o estado dos personagens
+                //PersonagensArquivo.salvaTodos(personagens);//salva o estado dos personagens
                 return;
             }
         }

@@ -1,20 +1,15 @@
 package guerreiro;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import game.Guerreiro;
-
-class Inimigo {
-    public int danoRecebido = 0;
-    public void tomaDano(int dano) { this.danoRecebido += dano; }
-    public int getDanoRecebido() { return danoRecebido; }
-}
+import game.Inimigo;
 
 public class GuerreiroTest {
 
@@ -54,79 +49,93 @@ public class GuerreiroTest {
     @Test
     void testHabilidadesAtaqueBasico() {
         Guerreiro g = new Guerreiro("Deniel");
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        Inimigo i = new Inimigo();
-        inimigos.add(i);
+        inimigos.add(inimigoMock);
         int result = g.habilidades(1, inimigos, 0);
-        assertTrue(result >= 0); // O dano deve ser >= 0
+        assertTrue(result >= 0);
+        verify(inimigoMock, atLeastOnce()).tomaDano(anyInt());
     }
 
     @Test
     void testHabilidadesAtaqueBashNivelBaixo() {
         Guerreiro g = new Guerreiro("Gabriel");
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock);
         int result = g.habilidades(2, inimigos, 0);
-        assertEquals(-1, result); // Nível muito baixo
+        assertEquals(-1, result);
+        verify(inimigoMock, never()).tomaDano(anyInt());
     }
 
     @Test
     void testHabilidadesAtaqueBashNivelAlto() {
         Guerreiro g = new Guerreiro("Gabriel", 5);
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock);
         int result = g.habilidades(2, inimigos, 0);
-        assertTrue(result >= 0); // O dano deve ser >= 0
+        assertTrue(result >= 0);
+        verify(inimigoMock, atLeastOnce()).tomaDano(anyInt());
     }
 
     @Test
     void testHabilidadesAtaqueCleaveNivelBaixo() {
         Guerreiro g = new Guerreiro("Gabriel");
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock);
         int result = g.habilidades(3, inimigos, 0);
-        assertEquals(-1, result); // Nível muito baixo
+        assertEquals(-1, result);
+        verify(inimigoMock, never()).tomaDano(anyInt());
     }
 
     @Test
     void testHabilidadesAtaqueCleaveNivelAlto() {
         Guerreiro g = new Guerreiro("Gabriel", 10);
+        Inimigo inimigoMock1 = mock(Inimigo.class);
+        Inimigo inimigoMock2 = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock1);
+        inimigos.add(inimigoMock2);
         int result = g.habilidades(3, inimigos, 0);
-        assertTrue(result >= 0); // O dano deve ser >= 0
+        assertTrue(result >= 0);
+        verify(inimigoMock1, atLeastOnce()).tomaDano(anyInt());
+        verify(inimigoMock2, atLeastOnce()).tomaDano(anyInt());
     }
 
     @Test
     void testHabilidadesAtaqueTauntNivelBaixo() {
         Guerreiro g = new Guerreiro("Gabriel");
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock);
         int result = g.habilidades(4, inimigos, 0);
-        assertEquals(-1, result); // Nível muito baixo
+        assertEquals(-1, result);
     }
 
     @Test
     void testHabilidadesAtaqueTauntNivelAlto() {
         Guerreiro g = new Guerreiro("Gabriel", 15);
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock);
         int result = g.habilidades(4, inimigos, 0);
         assertEquals(0, result);
         assertTrue(g.isTaunting());
-        assertEquals(5 + 5 * 14, g.getDef()); // Defesa aumentada em +5
+        assertEquals(5 + 5 * 14, g.getDef());
     }
 
     @Test
     void testFimTaunt() {
         Guerreiro g = new Guerreiro("Gabriel", 15);
+        Inimigo inimigoMock = mock(Inimigo.class);
         ArrayList<Inimigo> inimigos = new ArrayList<>();
-        inimigos.add(new Inimigo());
+        inimigos.add(inimigoMock);
         g.habilidades(4, inimigos, 0); // Ativa taunt
         assertTrue(g.isTaunting());
         g.fimTaunt();
         assertFalse(g.isTaunting());
-        assertEquals(5 + 2 * 14, g.getDef()); // Defesa volta ao normal
+        assertEquals(5 + 2 * 14, g.getDef());
     }
 }
