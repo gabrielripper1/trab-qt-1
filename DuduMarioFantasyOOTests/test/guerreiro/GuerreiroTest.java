@@ -1,15 +1,15 @@
 package guerreiro;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import game.Guerreiro;
 import game.Inimigo;
+
+
 
 public class GuerreiroTest {
 
