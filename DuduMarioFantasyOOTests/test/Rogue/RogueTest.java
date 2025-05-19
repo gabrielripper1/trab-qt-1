@@ -23,8 +23,12 @@ public class RogueTest {
     @Test   
     void testLevelUp() {
         int hpAntes = rogue.getHp();
+        int atkAntes = rogue.getAtk();
+        int defAntes = rogue.getDef();
         rogue.levelUp();
         assertEquals(hpAntes + 3, rogue.getHp());
+        assertEquals(atkAntes + 4, rogue.getAtk());
+        assertEquals(defAntes + 1, rogue.getDef());
     }
 
     @Test
