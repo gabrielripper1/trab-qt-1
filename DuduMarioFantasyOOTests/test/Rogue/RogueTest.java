@@ -30,7 +30,7 @@ public class RogueTest {
         assertEquals(hpAntes + 3, rogue.getHp());
         assertEquals(atkAntes + 4, rogue.getAtk());
         assertEquals(defAntes + 1, rogue.getDef()); 
-        assertEquals(HpAAntes + 1, rogue.getHpA()); 
+        assertEquals(HpAAntes + 3, rogue.getHpA()); 
     }
 
     @Test
